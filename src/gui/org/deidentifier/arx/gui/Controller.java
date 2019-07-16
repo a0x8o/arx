@@ -1460,6 +1460,9 @@ public class Controller implements IView {
         } catch (final IOException e) {
             main.showInfoDialog(main.getShell(),
                                 Resources.getMessage("Controller.82"), e.getMessage()); //$NON-NLS-1$
+
+            // Reset and return
+            reset();
             return;
         }
 
@@ -1477,6 +1480,8 @@ public class Controller implements IView {
             getResources().getLogger().info(worker.getError());
             main.showInfoDialog(main.getShell(), Resources.getMessage("Controller.85"), //$NON-NLS-1$
                                 message);
+            // Reset and return
+            reset();
             return;
         }
 
@@ -2029,6 +2034,9 @@ public class Controller implements IView {
 
     @Override
     public void reset() {
+        if (model != null) {
+            model.reset();
+        }
         for (final Set<IView> listeners : getListeners().values()) {
             for (final IView listener : listeners) {
                 listener.reset();
